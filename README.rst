@@ -77,7 +77,7 @@ Directory where coverage report create it's report.
 
 **CUSTOM_REPORTS**
 
-``True``, for html reports by 55minutes, False for coverage.py.
+``True``, for html reports by 55minutes, ``False`` for coverage.py.
 
 **USE_STDOUT**
 
