@@ -41,6 +41,23 @@ to. You can simply use the test runner if you like.
    See ``settings.py`` for more detail.
 3. Run ``manage.py test`` like you normally do.
 
+Settings
+--------
+
+All settings are prefixed with ``COVERAGE_``.
+
+* **TEST_RUNNER**: Specify the coverage test runner. Default is ``django_coverage.coverage_runner.CoverageRunner``
+* **USE_CACHE**: Specify whether coverage data file is created or not. Default is ``False``.
+* **CODE_EXCLUDES**: List of regular expressions to exclude in coverage report.
+* **PATH_EXCLUDES**: List of regular expressions of paths to exclude from coverage analysis.
+* **ADDITIONNAL_MODULES**: Specify a list of additional module paths to include in the coverage analysis.
+* **MODULE_EXCLUDES**: Specify a list of regular expressions of module paths to exclude from the coverage analysis.
+* **REPORT_HTML_OUTPUT_DIR**: Directory where coverage report create it's report.
+* **CUSTOM_REPORTS**: ``True``, for html reports by 55minutes, False for coverage.py.
+* **USE_STDOUT**: ``True``, always output coverage reports to STDOUT. ``False`` don't.
+* **BADGE_TYPE**: Badge type to create. Default is ``drone.io``.
+
+For more information about settings, read ``settings.py`` file.
 
 Extras
 ======
@@ -53,7 +70,7 @@ This will be stored in the same directory as the coverage report data:
 ``$PROJECT/.coverage/coverage_status.png``.
 
 Currently, the only badge type that is included is drone.io_. When other
-types are included, you will be able to select which is used by 
+types are included, you will be able to select which is used by
 ``settings.COVERAGE_BADGE_TYPE``.
 
 To prevent the badge generation, you could set this to ``None``.
