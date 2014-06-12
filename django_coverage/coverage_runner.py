@@ -15,7 +15,6 @@ limitations under the License.
 
 """
 import os
-import sys
 
 import django
 
@@ -77,9 +76,11 @@ class CoverageRunner(DjangoTestSuiteRunner):
         coverage.stop()
 
         coverage_modules = []
-        if test_labels:
+
+        if test_labels and all(
+                [len(label.split('.')) >= 2 for label in test_labels]):
             for label in test_labels:
-                label = label.split('.')[0]
+                label = label.split('.')[1]
                 app = get_app(label)
                 coverage_modules.append(self._get_app_package(app))
         else:
@@ -118,6 +119,6 @@ class CoverageRunner(DjangoTestSuiteRunner):
             else:
                 coverage._the_coverage.html_report(list(modules.values()), outdir)
             print("")
-            print("HTML reports were output to '%s'" %outdir)
+            print("HTML reports were output to '%s'" % outdir)
 
         return results
