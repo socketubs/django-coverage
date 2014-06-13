@@ -15,7 +15,6 @@ limitations under the License.
 
 """
 import os
-import sys
 
 import django
 
@@ -114,10 +113,21 @@ class CoverageRunner(DjangoTestSuiteRunner):
         if outdir:
             outdir = os.path.abspath(outdir)
             if settings.COVERAGE_CUSTOM_REPORTS:
-                html_report(outdir, modules, excludes, errors)
+                overall_covered = html_report(outdir, modules, excludes, errors)
             else:
-                coverage._the_coverage.html_report(list(modules.values()), outdir)
+                overall_covered = coverage._the_coverage.html_report(list(modules.values()), outdir)
             print("")
-            print("HTML reports were output to '%s'" %outdir)
+            print("HTML reports were output to '%s'" % outdir)
+
+            if settings.COVERAGE_BADGE_TYPE:
+                badge = open(os.path.join(
+                    os.path.dirname(__file__),
+                    'utils',
+                    'coverage_report',
+                    'badges',
+                    settings.COVERAGE_BADGE_TYPE,
+                    '%s.png' % int(overall_covered)), 'rb').read()
+                open(os.path.join(
+                    outdir, 'coverage_status.png'), 'wb').write(badge)
 
         return results
