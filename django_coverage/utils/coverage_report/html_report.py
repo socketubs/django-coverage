@@ -144,11 +144,4 @@ def html_report(outdir, modules, excludes=None, errors=None):
     fo.write(module_index.BOTTOM)
     fo.close()
 
-    if settings.COVERAGE_BADGE_TYPE:
-        badge = open(os.path.join(
-            os.path.dirname(__file__),
-            'badges',
-            settings.COVERAGE_BADGE_TYPE,
-            '%s.png' % int(overall_covered)
-        ), 'rb').read()
-        open(os.path.join(outdir, 'coverage_status.png'), 'wb').write(badge)
+    return overall_covered
