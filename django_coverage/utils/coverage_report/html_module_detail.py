@@ -13,8 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-
-import cgi, os
+import os
+try:
+    import html
+except ImportError:
+    import cgi as html
 
 from django_coverage.utils.coverage_report.data_storage import ModuleVars
 from django_coverage.utils.coverage_report.templates import default_module_detail as module_detail
@@ -62,7 +65,7 @@ def html_module_detail(filename, module_name, nav=None):
     m_vars.source_lines = source_lines = list()
     i = 0
     for i, source_line in enumerate(
-        [cgi.escape(l.rstrip()) for l in open(m_vars.source_file, 'r').readlines()]):
+        [html.escape(l.rstrip()) for l in open(m_vars.source_file, 'r').readlines()]):
         line_status = 'ignored'
         if i+1 in m_vars.executed: line_status = 'executed'
         if i+1 in m_vars.excluded: line_status = 'excluded'
