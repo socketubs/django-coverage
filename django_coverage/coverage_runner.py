@@ -30,7 +30,7 @@ from django.conf import global_settings
 from django.db.models import get_app, get_apps
 from django.test.utils import get_runner
 
-import coverage
+from coverage import coverage as Coverage
 
 from django_coverage import settings
 from django_coverage.utils.coverage_report import html_report
@@ -67,6 +67,10 @@ class CoverageRunner(DjangoTestSuiteRunner):
         return '.'.join(app_model_module.__name__.split('.')[:-1])
 
     def run_tests(self, test_labels, extra_tests=None, **kwargs):
+        if settings.COVERAGE_CONFIG_FILE:
+            coverage = Coverage(config_file=settings.COVERAGE_CONFIG_FILE)
+        else:
+            coverage = Coverage()
         coverage.use_cache(settings.COVERAGE_USE_CACHE)
         for e in settings.COVERAGE_CODE_EXCLUDES:
             coverage.exclude(e)
