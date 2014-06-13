@@ -119,9 +119,11 @@ class CoverageRunner(DjangoTestSuiteRunner):
         if outdir:
             outdir = os.path.abspath(outdir)
             if settings.COVERAGE_CUSTOM_REPORTS:
-                overall_covered = html_report(outdir, modules, excludes, errors)
+                overall_covered = html_report(
+                    outdir, modules, excludes, errors)
             else:
-                overall_covered = coverage._the_coverage.html_report(list(modules.values()), outdir)
+                overall_covered = coverage.html_report(
+                    list(modules.values()), outdir)
             print("")
             print("HTML reports were output to '%s'" % outdir)
 
